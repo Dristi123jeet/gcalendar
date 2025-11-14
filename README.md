@@ -10,7 +10,7 @@ Includes a modern UI, event creation, editing, deletion, cloud database, and ful
 🔹 **Frontend (Vercel):** https://gcalendar-ten.vercel.app/
 🔹 **Backend (Render):** https://gcal-backend.onrender.com  
 
-*(Replace these with your actual deployed URLs)*
+
 
 ---
 
