@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* base font & background */
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background: #f6f7fb;
+    color: #202124;
+  }
+}
+
+/* layout */
+.topbar { background: #fff; box-shadow: 0 1px 0 rgba(16,24,40,0.04); z-index: 30; }
+.sidebar { width: 280px; }
+.sidebar-card { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 1px 3px rgba(16,24,40,0.06); }
+
+/* create button */
+.create-btn {
+  background: linear-gradient(180deg,#1a73e8,#1967d2);
+  color: white;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 10px;
+  display:inline-flex; align-items:center; gap:8px;
+}
+
+/* calendar container card */
+.calendar-container { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 12px rgba(16,24,40,0.06); }
+
+/* FullCalendar toolbar & buttons */
+.fc .fc-toolbar-title { font-weight: 600; font-size: 1.125rem; }
+.fc .fc-button { border-radius: 8px; border: none; background: #f1f3f4; color: #202124; padding: 6px 10px; box-shadow: none; font-weight: 600; }
+.fc .fc-button-primary { background: #1a73e8; color: white; }
+
+/* day headers */
+.fc .fc-col-header-cell-cushion { font-weight: 600; color: #202124; }
+
+/* event pill styling */
+.fc .fc-daygrid-event, .fc .fc-timegrid-event {
+  border: none;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+/* mini calendar */
+.mini-calendar { max-width: 240px; }
+
+/* popover */
+.popover {
+  background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(16,24,40,0.12); padding: 12px; width: 320px;
+}
+
+/* drawer & backdrop */
+.drawer-backdrop { background: rgba(15,23,42,0.35); }
+.right-vertical { width: 56px; }
+
+/* small utilities */
+.badge { background: rgba(60,64,67,0.08); padding: 6px 10px; border-radius: 999px; font-size: .85rem; }
