@@ -4,6 +4,14 @@ import { motion } from 'framer-motion';
 
 const COLORS = ['#1a73e8', '#34a853', '#fbbc05', '#ea4335', '#8ab4f8', '#a142f4'];
 
+// ⭐ SAFEST ISO CONVERTER FOR PRODUCTION
+function toSafeISO(dtString) {
+  if (!dtString) return null;
+  const date = new Date(dtString);
+  if (isNaN(date.getTime())) return null;
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
+}
+
 export default function EventPopover({ anchor, initial, onClose }) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState('');
@@ -11,7 +19,6 @@ export default function EventPopover({ anchor, initial, onClose }) {
   const [color, setColor] = useState(COLORS[0]);
   const [allDay, setAllDay] = useState(initial.allDay || false);
 
-  // Fill start/end times
   useEffect(() => {
     if (initial.start) {
       setStart(new Date(initial.start).toISOString().slice(0, 16));
@@ -21,35 +28,21 @@ export default function EventPopover({ anchor, initial, onClose }) {
     }
   }, [initial]);
 
-  // ⭐ SMART — Auto adjust popover inside screen
   function computePosition() {
     const popWidth = 320;
     const popHeight = 260;
-
     const screenW = window.innerWidth;
     const screenH = window.innerHeight;
 
     let x = anchor.x;
     let y = anchor.y;
 
-    // Center horizontally if near edges
-    if (x + popWidth / 2 > screenW) {
-      x = screenW - popWidth - 20;
-    } else if (x - popWidth / 2 < 0) {
-      x = 20;
-    } else {
-      x = x - popWidth / 2;
-    }
+    if (x + popWidth / 2 > screenW) x = screenW - popWidth - 20;
+    else if (x - popWidth / 2 < 0) x = 20;
+    else x = x - popWidth / 2;
 
-    // Prevent going off bottom
-    if (y + popHeight > screenH) {
-      y = screenH - popHeight - 20;
-    }
-
-    // Prevent going above top
-    if (y < 80) {
-      y = 80;
-    }
+    if (y + popHeight > screenH) y = screenH - popHeight - 20;
+    if (y < 80) y = 80;
 
     return { left: x, top: y };
   }
@@ -61,11 +54,12 @@ export default function EventPopover({ anchor, initial, onClose }) {
       const payload = {
         title,
         description: '',
-        start: new Date(start).toISOString(),
-        end: new Date(end).toISOString(),
+        start: toSafeISO(start),
+        end: toSafeISO(end),
         allDay,
         color
       };
+
       await api.post('/events', payload);
       onClose();
     } catch (err) {
